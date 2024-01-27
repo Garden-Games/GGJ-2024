@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doc: {fileID: 1174926873}
-  buttonTemplate: {fileID: 0}
+  buttonTemplate: {fileID: 5278309773337537168, guid: 662ca6e77dc504c17a10001f1c494ce0, type: 3}
 --- !u!1 &282593419
 GameObject:
   m_ObjectHideFlags: 0
