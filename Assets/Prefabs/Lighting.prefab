@@ -233,7 +233,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8474177857915192290}
   - component: {fileID: 6338390589114490035}
-  - component: {fileID: 3493299272254308304}
   m_Layer: 0
   m_Name: Spot Light Top Left
   m_TagString: Untagged
@@ -307,7 +306,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 4.246444, y: 7.645066}
   m_BounceIntensity: 1
@@ -318,19 +317,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &3493299272254308304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7202831524130227552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7ab62cf4396f1f4d958b9acfa53d60e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!1 &7795187107752686829
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +400,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 4.246444, y: 7.645066}
   m_BounceIntensity: 1
