@@ -198,11 +198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7998098836658393484, guid: 05672e59a98538946831f4aaa4ea3664, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.37
+      value: 1.26
       objectReference: {fileID: 0}
     - target: {fileID: 7998098836658393484, guid: 05672e59a98538946831f4aaa4ea3664, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.37
+      value: 2.983
       objectReference: {fileID: 0}
     - target: {fileID: 7998098836658393484, guid: 05672e59a98538946831f4aaa4ea3664, type: 3}
       propertyPath: m_LocalRotation.w
@@ -259,11 +259,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 631504771851092526, guid: 09fada7ee9f8cee40a2420eca650d3a8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7132505
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 631504771851092526, guid: 09fada7ee9f8cee40a2420eca650d3a8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.70090926
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 631504771851092526, guid: 09fada7ee9f8cee40a2420eca650d3a8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -275,7 +275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 631504771851092526, guid: 09fada7ee9f8cee40a2420eca650d3a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -89
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 631504771851092526, guid: 09fada7ee9f8cee40a2420eca650d3a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -302,14 +302,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 122372997734340359, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Intensity
-      value: 4.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 122372997734340359, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1076832271048062875, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -353,26 +345,6 @@ PrefabInstance:
     - target: {fileID: 2767106938833565112, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Name
       value: Lighting
-      objectReference: {fileID: 0}
-    - target: {fileID: 6188742179219138441, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Name
-      value: Spot Light Right
-      objectReference: {fileID: 0}
-    - target: {fileID: 6188742179219138441, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6638613211659812740, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Name
-      value: Spot Light Left
-      objectReference: {fileID: 0}
-    - target: {fileID: 7908363014641908449, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Intensity
-      value: 13.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7908363014641908449, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

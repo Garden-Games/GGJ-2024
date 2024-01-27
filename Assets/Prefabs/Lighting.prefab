@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 9065391114910080765}
   - component: {fileID: 122372997734340359}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Spot Light Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,13 +77,13 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 7.1
+  m_Intensity: 4.69
   m_Range: 21.8
   m_SpotAngle: 55
   m_InnerSpotAngle: 4
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 2133432081488405431}
   - component: {fileID: 7908363014641908449}
   m_Layer: 0
-  m_Name: Spot Light (1)
+  m_Name: Spot Light Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,13 +171,13 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 19.7
+  m_Intensity: 13.13
   m_Range: 21.8
   m_SpotAngle: 55
   m_InnerSpotAngle: 4
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
