@@ -38,7 +38,7 @@ public class UIController : MonoBehaviour
             optionButtons.Add(button);
             UIDocument buttonUI = button.GetComponent<UIDocument>();
             VisualElement buttonRoot = buttonUI.rootVisualElement;
-            Button buttonElement = buttonRoot.Query<Button>("button");
+            Button buttonElement = buttonRoot.Query<Button>("option-button");
             buttonElement.text = option;
             choicebox.Add(buttonElement);
         });
