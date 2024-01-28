@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         OpenDoor,
         NavigateAntagonist,
         EndingEaten,
+        EndingEscaped,
         Counter,
         CloseCurtains,
         OpenCurtains
@@ -204,7 +205,8 @@ public class GameManager : MonoBehaviour
             case StoryState.EndingNothing:
                 {
                     controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
-                    // TODO: Trigger ending and credits sequence
+                    curtainsAnimator.SetTrigger("playCloseCurtains");
+                    lightingAnimator.SetTrigger("playTurnOnFrontLights");
                     exploreAudio.Stop();
                     break;
                 }
@@ -232,9 +234,12 @@ public class GameManager : MonoBehaviour
                     }
                     else if (option == "Avoid")
                     {
-                        StartCloseCurtainState();
+                        controller.updateDialogue("YOU ESCAPED");
+                        curtainsAnimator.SetTrigger("playCloseCurtains");
+                        lightingAnimator.SetTrigger("playTurnOnFrontLights");
                         stateStartTime = Time.time;
                         antagonistAudio.Stop();
+                        currentStoryState = StoryState.EndingEscaped;
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
 
