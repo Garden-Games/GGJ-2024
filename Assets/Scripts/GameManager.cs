@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
             case StoryState.WalkAround:
                 {
                     controller.updateDialogue("");
-
+                    clearOptions();
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
             case StoryState.TurnOnLight:
                 {
                     controller.updateDialogue("");
-
+                    clearOptions();
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
             case StoryState.TurnOffLight:
                 {
                     controller.updateDialogue("");
-
+                    clearOptions();
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -204,10 +204,14 @@ public class GameManager : MonoBehaviour
             // Triggered when the user chooses to go to sleep
             case StoryState.EndingNothing:
                 {
-                    controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
-                    curtainsAnimator.SetTrigger("playCloseCurtains");
-                    lightingAnimator.SetTrigger("playTurnOnFrontLights");
-                    exploreAudio.Stop();
+                    float stateDurationSeconds = 5;
+                    if (elapsedSecondsInState >= stateDurationSeconds)
+                    {
+                        curtainsAnimator.SetTrigger("playCloseCurtains");
+                        controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
+                        clearOptions();
+                        stateStartTime = Time.time;
+                    }
                     break;
                 }
 
@@ -223,7 +227,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.NavigateAntagonist:
                 {
-                    controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + option + ".");
+                    controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + antagonist + ".");
 
                     if (option == "Approach")
                     {
@@ -253,7 +257,7 @@ public class GameManager : MonoBehaviour
                     {
                         curtainsAnimator.SetTrigger("playCloseCurtains");
                         controller.updateDialogue("YOU DIED");
-
+                        clearOptions();
                         stateStartTime = Time.time;
 
                         // TODO: Trigger ending and credits sequence
