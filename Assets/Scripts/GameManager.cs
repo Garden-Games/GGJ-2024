@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
         TurnOffLight,
         EndingNothing,
         OpenDoor,
-        DefineAntagonist,
         NavigateAntagonist,
         EndingEaten,
         Counter,
@@ -25,6 +24,16 @@ public class GameManager : MonoBehaviour
     public Animator curtainsAnimator;
     public UIController controller;
 
+    public GameObject pantryDecorations;
+    public GameObject dogPrefab;
+
+    public GameObject potatoCharacter;
+    public GameObject potatoFace;
+    public Transform potatoAntagonistEncPosition;
+    public Material potatoFaceAntagonistEncounter;
+
+    public List<GameObject> frontLights;
+    public List<GameObject> topLights;
 
     private StoryState currentStoryState;
 
@@ -41,6 +50,31 @@ public class GameManager : MonoBehaviour
         StartBeginningState();
         stateStartTime = Time.time;
         lightsOn = false;
+
+        if (pantryDecorations == null) {
+            Debug.LogWarning("Pantry decorations reference is null");
+        }
+        if (dogPrefab == null) {
+            Debug.LogWarning("Dog prefab is null");
+        }
+        if (potatoCharacter == null) {
+            Debug.LogWarning("Potato character is null");
+        }
+        if (potatoFace == null) {
+            Debug.LogWarning("Potato face is null");
+        }
+        if (potatoAntagonistEncPosition == null) {
+            Debug.LogWarning("Potato antagonist position is null");
+        }
+        if (potatoFaceAntagonistEncounter == null) {
+            Debug.LogWarning("Potato face antagonist encounter is null");
+        }
+        if (topLights.Count == 0) {
+            Debug.LogWarning("Top lights list is empty");
+        }
+        if (frontLights.Count == 0) {
+            Debug.LogWarning("Front lights list is empty");
+        }
     }
 
     // Update is called once per frame
@@ -57,7 +91,6 @@ public class GameManager : MonoBehaviour
         {
             case StoryState.Beginning:
                 {
-                    // TODO: Use UI inputs instead of key presses
                     if (lightsOn)
                     {
                         if (this.option == "Walk Around")
@@ -169,23 +202,8 @@ public class GameManager : MonoBehaviour
                     break;
                 }
 
-            case StoryState.DefineAntagonist:
-                {
-                    // TODO: Use UI inputs instead of key presses
-                    if (option != null)
-                    {
-                        LoadAntagonist(option);
-                        antagonist = option;
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-
-                    break;
-                }
-
             case StoryState.NavigateAntagonist:
                 {
-                    // TODO: Use UI inputs instead of key presses
                     if (option == "Approach")
                     {
                         currentStoryState = StoryState.EndingEaten;
@@ -318,15 +336,15 @@ public class GameManager : MonoBehaviour
         {
             case "Dog":
                 Debug.Log("Loading dog");
-                // TODO: Trigger loading dog
+                Instantiate(dogPrefab);
                 break;
             case "Hippo":
                 Debug.Log("Loading hippo");
-                // TODO: Trigger loading hippo
+                Instantiate(dogPrefab);
                 break;
             case "Kraken":
                 Debug.Log("Loading kraken");
-                // TODO: Trigger loading kraken
+                Instantiate(dogPrefab);
                 break;
         }
     }
@@ -350,7 +368,7 @@ public class GameManager : MonoBehaviour
    
     void StartCloseCurtainState()
     {
-        Debug.Log("Closing curtains. Press 5 to open curtains");
+        Debug.Log("Closing curtains");
         curtainsAnimator.SetTrigger("playCloseCurtains");
         lightingAnimator.SetTrigger("playTurnOnFrontLights");
         currentStoryState = StoryState.CloseCurtains;
@@ -359,7 +377,34 @@ public class GameManager : MonoBehaviour
     void StartOpenCurtainState()
     {
         curtainsAnimator.SetTrigger("playOpenCurtains");
-        lightingAnimator.SetTrigger("playTurnOffFrontLights");
+        lightingAnimator.SetTrigger("playTurnOffTopLeftLight");
+
+        // Leave front lights on
+
+        // Move potato to left position
+        potatoCharacter.transform.position =
+            potatoAntagonistEncPosition.transform.position;
+
+        // Change ambient light color
+        RenderSettings.ambientLight =
+            new Color(0.3836477f, 0.04705108f, 0.04705108f);
+        RenderSettings.ambientIntensity = 0;
+
+        // Change scene lighting
+        foreach (GameObject o in frontLights) {
+            o.GetComponent<Light>().intensity = 3;
+        }
+        foreach (GameObject o in topLights) {
+            o.GetComponent<Light>().intensity = 0;
+        }
+
+        // Apply surprised face
+        potatoFace.GetComponent<MeshRenderer>().material =
+            potatoFaceAntagonistEncounter;
+
+        // Remove pantry decorations
+        Destroy(pantryDecorations);
+
         currentStoryState = StoryState.OpenCurtains;
     }
 }
