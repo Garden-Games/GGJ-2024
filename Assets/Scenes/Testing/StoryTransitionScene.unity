@@ -141,6 +141,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 88161115}
     - target: {fileID: 3978998377817003003, guid: 755f114ac1af37746956f15814174925, type: 3}
+      propertyPath: curtainsAnimator
+      value: 
+      objectReference: {fileID: 452565375}
+    - target: {fileID: 3978998377817003003, guid: 755f114ac1af37746956f15814174925, type: 3}
       propertyPath: lightingAnimator
       value: 
       objectReference: {fileID: 811875782}
@@ -513,7 +517,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 122372997734340359, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
-      value: 3.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 830172574371637967, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
@@ -569,7 +573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908363014641908449, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
-      value: 3.24
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

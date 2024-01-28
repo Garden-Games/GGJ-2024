@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour
         WalkAround,
         TurnOnLight,
         TurnOffLight,
-        GoToSleep
+        GoToSleep,
+        CloseCurtains,
+        OpenCurtains
     }
 
     public Animator lightingAnimator;
     public Animator potatoAnimator;
+    public Animator curtainsAnimator;
 
     private StoryState currentStoryState;
 
@@ -68,6 +71,11 @@ public class GameManager : MonoBehaviour
                         currentStoryState = StoryState.GoToSleep;
                         stateStartTime = Time.time;
                         Debug.Log("Transitioning to " + currentStoryState);
+                    }
+                    else if (Input.GetKey(KeyCode.Alpha5))
+                    {
+                        StartCloseCurtainState();
+                        stateStartTime = Time.time;
                     }
 
                     break;
@@ -124,6 +132,34 @@ public class GameManager : MonoBehaviour
                     break;
                 }
 
+            case StoryState.CloseCurtains:
+                {
+                    float stateDurationSeconds = 5;
+
+                    if (elapsedSecondsInState < stateDurationSeconds)
+                    {
+                        break;
+                    }
+                    if (Input.GetKey(KeyCode.Alpha5)) {
+                        StartOpenCurtainState();
+                        stateStartTime = Time.time;
+                    }
+
+                    break;
+                }
+
+            case StoryState.OpenCurtains:
+                {
+                    float stateDurationSeconds = 5;
+                    if (elapsedSecondsInState >= stateDurationSeconds)
+                    {
+                        StartBeginningState();
+                        stateStartTime = Time.time;
+                    }
+
+                    break;
+                }
+
             default:
                 {
                     Debug.LogWarning("Unknown current state " + currentStoryState);
@@ -134,7 +170,9 @@ public class GameManager : MonoBehaviour
 
     void StartBeginningState()
     {
-        Debug.Log("Press 1 for walk around, 2 for lights on, 3 for lights off, 4 for sleep");
+        Debug.Log(
+            "Press 1 for walk around, 2 for lights on, 3 for lights off, 4 for sleep, "
+            + "5 to close curtains");
         currentStoryState = StoryState.Beginning;
     }
 
@@ -154,5 +192,20 @@ public class GameManager : MonoBehaviour
     {
         potatoAnimator.SetTrigger("playPotatoWalkAround");
         currentStoryState = StoryState.WalkAround;
+    }
+
+    void StartCloseCurtainState()
+    {
+        Debug.Log("Closing curtains. Press 5 to open curtains");
+        curtainsAnimator.SetTrigger("playCloseCurtains");
+        lightingAnimator.SetTrigger("playTurnOnFrontLights");
+        currentStoryState = StoryState.CloseCurtains;
+    }
+
+    void StartOpenCurtainState()
+    {
+        curtainsAnimator.SetTrigger("playOpenCurtains");
+        lightingAnimator.SetTrigger("playTurnOffFrontLights");
+        currentStoryState = StoryState.OpenCurtains;
     }
 }
