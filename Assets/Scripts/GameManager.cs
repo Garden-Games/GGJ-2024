@@ -228,12 +228,14 @@ public class GameManager : MonoBehaviour
                         potatoAnimator.SetTrigger("playPotatoApproachEnemy");
                         currentStoryState = StoryState.EndingEaten;
                         stateStartTime = Time.time;
+                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
                     else if (option == "Avoid")
                     {
                         StartCloseCurtainState();
                         stateStartTime = Time.time;
+                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
 
