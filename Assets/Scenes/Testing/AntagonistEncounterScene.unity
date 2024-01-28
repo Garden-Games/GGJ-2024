@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.32704395, g: 0.118270546, b: 0.118270546, a: 1}
+  m_AmbientSkyColor: {r: 0.38364768, g: 0.047051083, b: 0.047051083, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -751,7 +751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1664225308299124762, guid: e4b9ca3e3f04a9f4c9eb2bec2aae8c2b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.97
+      value: 2.734
       objectReference: {fileID: 0}
     - target: {fileID: 1664225308299124762, guid: e4b9ca3e3f04a9f4c9eb2bec2aae8c2b, type: 3}
       propertyPath: m_LocalRotation.w
