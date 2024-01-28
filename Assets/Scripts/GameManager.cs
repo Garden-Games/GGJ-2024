@@ -10,7 +10,12 @@ public class GameManager : MonoBehaviour
         WalkAround,
         TurnOnLight,
         TurnOffLight,
-        GoToSleep
+        EndingNothing,
+        OpenDoor,
+        DefineAntagonist,
+        NavigateAntagonist,
+        EndingEaten,
+        Counter
     }
 
     public Animator lightingAnimator;
@@ -19,6 +24,8 @@ public class GameManager : MonoBehaviour
     private StoryState currentStoryState;
 
     private float stateStartTime;
+    private bool lightsOn;
+    private string antagonist;
         
 
     // Start is called before the first frame update
@@ -26,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         StartBeginningState();
         stateStartTime = Time.time;
+        lightsOn = false;
     }
 
     // Update is called once per frame
@@ -44,33 +52,53 @@ public class GameManager : MonoBehaviour
                 {
 
                     // TODO: Use UI inputs instead of key presses
-                    if (Input.GetKey(KeyCode.Alpha1))
+                    if (lightsOn)
                     {
-                        StartWalkAroundState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
+                        if (Input.GetKey(KeyCode.Alpha1))
+                        {
+                            StartWalkAroundState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (Input.GetKey(KeyCode.Alpha2))
+                        {
+                            StartTurnOffLightState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (Input.GetKey(KeyCode.Alpha3))
+                        {
+                            StartOpenDoorState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
 
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha2))
-                    {
-                        StartTurnOnLightState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha3))
-                    {
-                        StartTurnOffLightState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha4))
-                    {
-                        currentStoryState = StoryState.GoToSleep;
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
+                        break;
                     }
 
-                    break;
+                    else // lightsOn == false
+                    {
+                        if (Input.GetKey(KeyCode.Alpha1))
+                        {
+                            StartWalkAroundState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (Input.GetKey(KeyCode.Alpha2))
+                        {
+                            StartTurnOnLightState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (Input.GetKey(KeyCode.Alpha3))
+                        {
+                            currentStoryState = StoryState.EndingNothing;
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+
+                        break;
+                    }
                 }
                 
             case StoryState.WalkAround:
@@ -111,16 +139,79 @@ public class GameManager : MonoBehaviour
                     break;
                 }
 
-            case StoryState.GoToSleep:
+            // Triggered when the user chooses to go to sleep
+            case StoryState.EndingNothing:
+                {
+                    // TODO: Trigger ending and credits sequence
+                    break;
+                }
+
+            case StoryState.OpenDoor:
                 {
                     float stateDurationSeconds = 5;
 
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
-                        StartBeginningState();
+                        StartDefineAntagonistState();
                         stateStartTime = Time.time;
                     }
 
+                    break;
+                }
+
+            case StoryState.DefineAntagonist:
+                {
+                    // TODO: Use UI inputs instead of key presses
+                    if (Input.GetKey(KeyCode.Alpha1))
+                    {
+                        LoadAntagonist("Dog");
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+                    else if (Input.GetKey(KeyCode.Alpha2))
+                    {
+                        LoadAntagonist("Hippo");
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+                    else if (Input.GetKey(KeyCode.Alpha3))
+                    {
+                        LoadAntagonist("Kraken");
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+
+                    break;
+                }
+
+            case StoryState.NavigateAntagonist:
+                {
+                    // TODO: Use UI inputs instead of key presses
+                    if (Input.GetKey(KeyCode.Alpha1))
+                    {
+                        currentStoryState = StoryState.EndingEaten;
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+                    else if (Input.GetKey(KeyCode.Alpha2))
+                    {
+                        currentStoryState = StoryState.Counter;
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+
+                    break;
+                }
+
+            case StoryState.EndingEaten:
+                {
+                    // TODO: Trigger ending and credits sequence
+                    break;
+                }
+
+            case StoryState.Counter:
+                {
+                    // TODO: Load counter scene, continue story
                     break;
                 }
 
@@ -134,7 +225,14 @@ public class GameManager : MonoBehaviour
 
     void StartBeginningState()
     {
-        Debug.Log("Press 1 for walk around, 2 for lights on, 3 for lights off, 4 for sleep");
+        if (lightsOn)
+        {
+            Debug.Log("Press 1 for walk around, 2 for lights off, 3 to open door");
+        }
+        else
+        {
+            Debug.Log("Press 1 for walk around, 2 for lights on, 3 to go to sleep");
+        }
         currentStoryState = StoryState.Beginning;
     }
 
@@ -142,17 +240,53 @@ public class GameManager : MonoBehaviour
     {
         lightingAnimator.SetTrigger("playTurnOnLights");
         currentStoryState = StoryState.TurnOnLight;
+        lightsOn = true;
     }
 
     void StartTurnOffLightState()
     {
         lightingAnimator.SetTrigger("playTurnOffLights");
         currentStoryState = StoryState.TurnOffLight;
+        lightsOn = false;
     }
 
     void StartWalkAroundState()
     {
         potatoAnimator.SetTrigger("playPotatoWalkAround");
         currentStoryState = StoryState.WalkAround;
+    }
+
+    void StartOpenDoorState()
+    {
+        // TODO: Trigger audio of door opening
+        currentStoryState = StoryState.OpenDoor;
+    }
+
+    void StartDefineAntagonistState()
+    {
+        Debug.Log("Press 1 for dog, 2 for hippo, 3 for kraken");
+        currentStoryState = StoryState.DefineAntagonist;
+    }
+
+    void LoadAntagonist(string name)
+    {
+        switch(name)
+        {
+            case "Dog":
+                Debug.Log("Loading dog");
+                // TODO: Trigger loading dog
+                break;
+            case "Hippo":
+                Debug.Log("Loading hippo");
+                // TODO: Trigger loading hippo
+                break;
+            case "Kraken":
+                Debug.Log("Loading kraken");
+                // TODO: Trigger loading kraken
+                break;
+        }
+        antagonist = name;
+        currentStoryState = StoryState.NavigateAntagonist;
+        Debug.Log("Press 1 for approach, 2 for avoid");
     }
 }
