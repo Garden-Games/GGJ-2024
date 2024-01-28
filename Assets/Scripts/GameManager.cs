@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
         TurnOffLight,
         EndingNothing,
         OpenDoor,
-        DefineAntagonist,
         NavigateAntagonist,
         EndingEaten,
         Counter,
@@ -28,6 +27,16 @@ public class GameManager : MonoBehaviour
     public AudioSource exploreAudio;
     public AudioSource antagonistAudio;
 
+    public GameObject pantryDecorations;
+    public GameObject dogPrefab;
+
+    public GameObject potatoCharacter;
+    public GameObject potatoFace;
+    public Transform potatoAntagonistEncPosition;
+    public Material potatoFaceAntagonistEncounter;
+
+    public List<GameObject> frontLights;
+    public List<GameObject> topLights;
 
     private StoryState currentStoryState;
 
@@ -44,6 +53,31 @@ public class GameManager : MonoBehaviour
         StartBeginningState();
         stateStartTime = Time.time;
         lightsOn = false;
+
+        if (pantryDecorations == null) {
+            Debug.LogWarning("Pantry decorations reference is null");
+        }
+        if (dogPrefab == null) {
+            Debug.LogWarning("Dog prefab is null");
+        }
+        if (potatoCharacter == null) {
+            Debug.LogWarning("Potato character is null");
+        }
+        if (potatoFace == null) {
+            Debug.LogWarning("Potato face is null");
+        }
+        if (potatoAntagonistEncPosition == null) {
+            Debug.LogWarning("Potato antagonist position is null");
+        }
+        if (potatoFaceAntagonistEncounter == null) {
+            Debug.LogWarning("Potato face antagonist encounter is null");
+        }
+        if (topLights.Count == 0) {
+            Debug.LogWarning("Top lights list is empty");
+        }
+        if (frontLights.Count == 0) {
+            Debug.LogWarning("Front lights list is empty");
+        }
         exploreAudio.Play();
     }
 
@@ -61,9 +95,10 @@ public class GameManager : MonoBehaviour
         {
             case StoryState.Beginning:
                 {
-                    // TODO: Use UI inputs instead of key presses
                     if (lightsOn)
                     {
+                        controller.updateDialogue("Eyeing the lit room, McCringle opts to _______ .");
+
                         if (this.option == "Walk Around")
                         {
                             clearOptions();
@@ -94,6 +129,8 @@ public class GameManager : MonoBehaviour
 
                     else // lightsOn == false
                     {
+                        controller.updateDialogue("Waiting in darkness, Julius \"Spud\" McCringle decides to _______ .");
+
                         if (option == "Walk Around")
                         {
                             clearOptions();
@@ -124,6 +161,8 @@ public class GameManager : MonoBehaviour
                 
             case StoryState.WalkAround:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -136,6 +175,8 @@ public class GameManager : MonoBehaviour
 
             case StoryState.TurnOnLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -147,6 +188,8 @@ public class GameManager : MonoBehaviour
                 }
             case StoryState.TurnOffLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -160,6 +203,7 @@ public class GameManager : MonoBehaviour
             // Triggered when the user chooses to go to sleep
             case StoryState.EndingNothing:
                 {
+                    controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
                     // TODO: Trigger ending and credits sequence
                     exploreAudio.Stop();
                     break;
@@ -167,6 +211,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenDoor:
                 {
+                    controller.updateDialogue("");
                     StartCloseCurtainState();
                     stateStartTime = Time.time;
                     Debug.Log("Transitioning to " + currentStoryState);
@@ -174,28 +219,15 @@ public class GameManager : MonoBehaviour
                     break;
                 }
 
-            case StoryState.DefineAntagonist:
-                {
-                    // TODO: Use UI inputs instead of key presses
-                    if (option != null)
-                    {
-                        LoadAntagonist(option);
-                        antagonist = option;
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-
-                    break;
-                }
-
             case StoryState.NavigateAntagonist:
                 {
-                    // TODO: Use UI inputs instead of key presses
+                    controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + option + ".");
+
                     if (option == "Approach")
                     {
+                        potatoAnimator.SetTrigger("playPotatoApproachEnemy");
                         currentStoryState = StoryState.EndingEaten;
                         stateStartTime = Time.time;
-                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
                     else if (option == "Avoid")
@@ -211,7 +243,17 @@ public class GameManager : MonoBehaviour
 
             case StoryState.EndingEaten:
                 {
-                    // TODO: Trigger ending and credits sequence
+                    float stateDurationSeconds = 3.5f;
+                    if (elapsedSecondsInState >= stateDurationSeconds)
+                    {
+                        curtainsAnimator.SetTrigger("playCloseCurtains");
+                        controller.updateDialogue("YOU DIED");
+
+                        stateStartTime = Time.time;
+
+                        // TODO: Trigger ending and credits sequence
+                        antagonistAudio.Stop();
+                    }
                     break;
                 }
 
@@ -223,7 +265,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.CloseCurtains:
                 {
-                    float stateDurationSeconds = 5;
+                    float stateDurationSeconds = 1;
                     if (elapsedSecondsInState < stateDurationSeconds)
                     {
                         break;
@@ -240,7 +282,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenCurtains:
                 {
-                    float stateDurationSeconds = 5;
+                    float stateDurationSeconds = 1;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         break;
@@ -310,6 +352,7 @@ public class GameManager : MonoBehaviour
 
     void DefineAntagonist()
     {
+        controller.updateDialogue("McCringle finds a tremendous _______ as the pantry door swings open...");
         controller.sendOptions(new List<string> { "Dog", "Hippo", "Kraken" });
         LoadAntagonist(option);
         antagonist = option;
@@ -323,21 +366,24 @@ public class GameManager : MonoBehaviour
 
     void LoadAntagonist(string name)
     {
+        
         switch(name)
         {
             case "Dog":
                 Debug.Log("Loading dog");
-                // TODO: Trigger loading dog
+                Instantiate(dogPrefab);
                 break;
             case "Hippo":
                 Debug.Log("Loading hippo");
-                // TODO: Trigger loading hippo
+                Instantiate(dogPrefab);
                 break;
             case "Kraken":
                 Debug.Log("Loading kraken");
-                // TODO: Trigger loading kraken
+                Instantiate(dogPrefab);
                 break;
         }
+
+        
     }
 
     void StartNavigateAntagonist()
@@ -360,7 +406,8 @@ public class GameManager : MonoBehaviour
    
     void StartCloseCurtainState()
     {
-        Debug.Log("Closing curtains. Press 5 to open curtains");
+        controller.updateDialogue("");
+        Debug.Log("Closing curtains");
         curtainsAnimator.SetTrigger("playCloseCurtains");
         lightingAnimator.SetTrigger("playTurnOnFrontLights");
         currentStoryState = StoryState.CloseCurtains;
@@ -368,8 +415,36 @@ public class GameManager : MonoBehaviour
 
     void StartOpenCurtainState()
     {
+        controller.updateDialogue("");
         curtainsAnimator.SetTrigger("playOpenCurtains");
-        lightingAnimator.SetTrigger("playTurnOffFrontLights");
+        lightingAnimator.SetTrigger("playTurnOffTopLeftLight");
+
+        // Leave front lights on
+
+        // Move potato to left position
+        potatoCharacter.transform.position =
+            potatoAntagonistEncPosition.transform.position;
+
+        // Change ambient light color
+        RenderSettings.ambientLight =
+            new Color(0.3836477f, 0.04705108f, 0.04705108f);
+        RenderSettings.ambientIntensity = 0;
+
+        // Change scene lighting
+        foreach (GameObject o in frontLights) {
+            o.GetComponent<Light>().intensity = 3;
+        }
+        foreach (GameObject o in topLights) {
+            o.GetComponent<Light>().intensity = 0;
+        }
+
+        // Apply surprised face
+        potatoFace.GetComponent<MeshRenderer>().material =
+            potatoFaceAntagonistEncounter;
+
+        // Remove pantry decorations
+        Destroy(pantryDecorations);
+
         currentStoryState = StoryState.OpenCurtains;
     }
 }

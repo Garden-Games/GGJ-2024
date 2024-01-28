@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076832271048062875}
+  - component: {fileID: 5136835853787449054}
   m_Layer: 0
   m_Name: Lighting
   m_TagString: Untagged
@@ -35,6 +36,27 @@ Transform:
   - {fileID: 6222726101924119247}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5136835853787449054
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2767106938833565112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14cb2858c00da6940920373d4908de1f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6188742179219138441
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +101,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 0
   m_Range: 21.8
   m_SpotAngle: 55
   m_InnerSpotAngle: 4
@@ -173,7 +195,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.24
+  m_Intensity: 0
   m_Range: 21.8
   m_SpotAngle: 55
   m_InnerSpotAngle: 4
@@ -233,6 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8474177857915192290}
   - component: {fileID: 6338390589114490035}
+  - component: {fileID: 4722379063496579384}
   m_Layer: 0
   m_Name: Spot Light Top Left
   m_TagString: Untagged
@@ -267,7 +290,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 23.43
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 53
   m_InnerSpotAngle: 21.80208
@@ -317,6 +340,19 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &4722379063496579384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7202831524130227552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ab62cf4396f1f4d958b9acfa53d60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &7795187107752686829
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +397,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 23.43
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 53
   m_InnerSpotAngle: 21.80208

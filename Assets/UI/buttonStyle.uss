@@ -1,0 +1,22 @@
+#option-button{
+    background-color: rgb(222, 176, 245);
+    border-color: rgb(213, 130, 255);
+    border-radius: 10px;
+    border-width: 20px;
+    min-width: 10%;
+    transition-timing-function: ease-out-elastic;
+    transition-duration: 0.15s;
+    padding: 20px;
+    margin: 5px;
+    margin-top: 10px;
+}
+
+#option-button:hover{
+    background-color: rgb(213, 130, 255);
+    color: white;
+    padding-bottom: 25px;
+    scale: 1.07;
+    translate: 0px -20px;
+    rotate: -1deg;
+}
+
