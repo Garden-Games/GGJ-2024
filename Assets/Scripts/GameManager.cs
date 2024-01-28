@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public Animator potatoAnimator;
     public Animator curtainsAnimator;
     public UIController controller;
+    public AudioSource doorAudio;
+    public AudioSource exploreAudio;
+    public AudioSource antagonistAudio;
 
     public GameObject pantryDecorations;
     public GameObject dogPrefab;
@@ -75,6 +78,7 @@ public class GameManager : MonoBehaviour
         if (frontLights.Count == 0) {
             Debug.LogWarning("Front lights list is empty");
         }
+        exploreAudio.Play();
     }
 
     // Update is called once per frame
@@ -201,6 +205,7 @@ public class GameManager : MonoBehaviour
                 {
                     controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
                     // TODO: Trigger ending and credits sequence
+                    exploreAudio.Stop();
                     break;
                 }
 
@@ -244,6 +249,9 @@ public class GameManager : MonoBehaviour
                         controller.updateDialogue("YOU DIED");
 
                         stateStartTime = Time.time;
+
+                        // TODO: Trigger ending and credits sequence
+                        antagonistAudio.Stop();
                     }
                     break;
                 }
@@ -335,6 +343,8 @@ public class GameManager : MonoBehaviour
     void StartOpenDoorState()
     {
         // TODO: Trigger audio of door opening
+        exploreAudio.Stop();
+        doorAudio.Play();
         currentStoryState = StoryState.OpenDoor;
         doorOpened = true;
     }
@@ -379,6 +389,7 @@ public class GameManager : MonoBehaviour
     {
         controller.sendOptions(new List<string> { "Approach", "Avoid" });
         currentStoryState = StoryState.NavigateAntagonist;
+        antagonistAudio.Play();
     }
 
     void handleOption(string option)
