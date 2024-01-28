@@ -228,7 +228,6 @@ public class GameManager : MonoBehaviour
                         potatoAnimator.SetTrigger("playPotatoApproachEnemy");
                         currentStoryState = StoryState.EndingEaten;
                         stateStartTime = Time.time;
-                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
                     else if (option == "Avoid")
@@ -244,7 +243,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.EndingEaten:
                 {
-                    float stateDurationSeconds = 5;
+                    float stateDurationSeconds = 3.5f;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         curtainsAnimator.SetTrigger("playCloseCurtains");
@@ -266,7 +265,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.CloseCurtains:
                 {
-                    float stateDurationSeconds = 5;
+                    float stateDurationSeconds = 1;
                     if (elapsedSecondsInState < stateDurationSeconds)
                     {
                         break;
@@ -283,7 +282,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenCurtains:
                 {
-                    float stateDurationSeconds = 5;
+                    float stateDurationSeconds = 1;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         break;
