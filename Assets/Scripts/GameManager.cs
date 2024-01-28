@@ -195,12 +195,14 @@ public class GameManager : MonoBehaviour
                     {
                         currentStoryState = StoryState.EndingEaten;
                         stateStartTime = Time.time;
+                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
                     else if (option == "Avoid")
                     {
                         StartCloseCurtainState();
                         stateStartTime = Time.time;
+                        antagonistAudio.Stop();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
 
@@ -210,7 +212,6 @@ public class GameManager : MonoBehaviour
             case StoryState.EndingEaten:
                 {
                     // TODO: Trigger ending and credits sequence
-                    antagonistAudio.Stop();
                     break;
                 }
 
