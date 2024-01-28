@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private bool lightsOn;
     private string antagonist;
     private string option;
+    private bool doorOpened;
         
 
     // Start is called before the first frame update
@@ -114,13 +115,6 @@ public class GameManager : MonoBehaviour
                         }
 
                         break;
-                    // else if (Input.GetKey(KeyCode.Alpha5))
-                    // {
-                    //     StartCloseCurtainState();
-                    //     stateStartTime = Time.time;
-                    // }
-
-                        // break;
                     }
                 }
                 
@@ -168,12 +162,9 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenDoor:
                 {
-                    float stateDurationSeconds = 5;
-                    if (elapsedSecondsInState >= stateDurationSeconds)
-                    {
-                        StartDefineAntagonistState();
-                        stateStartTime = Time.time;
-                    }
+                    StartCloseCurtainState();
+                    stateStartTime = Time.time;
+                    Debug.Log("Transitioning to " + currentStoryState);
 
                     break;
                 }
@@ -186,28 +177,8 @@ public class GameManager : MonoBehaviour
                         LoadAntagonist(option);
                         antagonist = option;
                         stateStartTime = Time.time;
-                        StartNavigateAntagonist();
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
-
-                    // if (option == "Dog")
-                    // {
-                    //     LoadAntagonist("Dog");
-                    //     stateStartTime = Time.time;
-                    //     Debug.Log("Transitioning to " + currentStoryState);
-                    // }
-                    // else if (Input.GetKey(KeyCode.Alpha2))
-                    // {
-                    //     LoadAntagonist("Hippo");
-                    //     stateStartTime = Time.time;
-                    //     Debug.Log("Transitioning to " + currentStoryState);
-                    // }
-                    // else if (Input.GetKey(KeyCode.Alpha3))
-                    // {
-                    //     LoadAntagonist("Kraken");
-                    //     stateStartTime = Time.time;
-                    //     Debug.Log("Transitioning to " + currentStoryState);
-                    // }
 
                     break;
                 }
@@ -250,9 +221,11 @@ public class GameManager : MonoBehaviour
                     {
                         break;
                     }
-                    if (Input.GetKey(KeyCode.Alpha5)) {
-                        StartOpenCurtainState();
-                        stateStartTime = Time.time;
+
+                    // Define antagonist after opening the door
+                    if (doorOpened)
+                    {
+                        DefineAntagonist();
                     }
 
                     break;
@@ -263,8 +236,15 @@ public class GameManager : MonoBehaviour
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
-                        StartBeginningState();
+                        break;
+                    }
+
+                    // Turn off door-open sequence after curtains re-open
+                    if (doorOpened)
+                    {
+                        StartNavigateAntagonist();
                         stateStartTime = Time.time;
+                        doorOpened = false;
                     }
 
                     break;
@@ -284,12 +264,10 @@ public class GameManager : MonoBehaviour
         if (lightsOn)
         {
             controller.sendOptions(new List<string> { "Walk Around", "Turn Off Lights", "Open Door" });
-            // Debug.Log("Press 1 for walk around, 2 for lights off, 3 to open door");
         }
         else
         {
             controller.sendOptions(new List<string> { "Walk Around", "Turn On Lights", "Go to sleep" });
-            // Debug.Log("Press 1 for walk around, 2 for lights on, 3 to go to sleep");
         }
         currentStoryState = StoryState.Beginning;
     }
@@ -318,13 +296,20 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Trigger audio of door opening
         currentStoryState = StoryState.OpenDoor;
+        doorOpened = true;
     }
 
-    void StartDefineAntagonistState()
+    void DefineAntagonist()
     {
-        // Debug.Log("Press 1 for dog, 2 for hippo, 3 for kraken");
         controller.sendOptions(new List<string> { "Dog", "Hippo", "Kraken" });
-        currentStoryState = StoryState.DefineAntagonist;
+        LoadAntagonist(option);
+        antagonist = option;
+        stateStartTime = Time.time;
+        if (antagonist != null)
+        {
+            StartOpenCurtainState();
+            currentStoryState = StoryState.OpenCurtains;
+        }
     }
 
     void LoadAntagonist(string name)
@@ -344,9 +329,6 @@ public class GameManager : MonoBehaviour
                 // TODO: Trigger loading kraken
                 break;
         }
-        // antagonist = name;
-        // currentStoryState = StoryState.NavigateAntagonist;
-        // Debug.Log("Press 1 for approach, 2 for avoid");
     }
 
     void StartNavigateAntagonist()
@@ -357,7 +339,6 @@ public class GameManager : MonoBehaviour
 
     void handleOption(string option)
     {
-        // Debug.Log("Hello from game manager " + option);
         this.option = option;
     } 
 
