@@ -8,16 +8,17 @@ public class OptionButtonOnClick : MonoBehaviour
     Button thisButton;
     private bool isClicked = false;
     private GameObject gameManager;
+    private VisualElementStyleSheetSet style;
 
 
     private void OnEnable()
     {
-        thisButton = gameObject.GetComponent<UIDocument>().rootVisualElement.Query<Button>("button");
+        thisButton = gameObject.GetComponent<UIDocument>().rootVisualElement.Query<Button>("option-button");
         thisButton.clicked += OnClick;
+        style = thisButton.styleSheets;
         gameManager = GameObject.Find("GameManager");
 
     }
-
 
     void OnClick()
     {

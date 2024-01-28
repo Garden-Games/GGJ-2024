@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] UIDocument doc;
     [SerializeField] GameObject buttonTemplate;
+    [SerializeField] StyleSheet styleSheet;
     private Label dialogueBox;
     private VisualElement choicebox;
     private List<GameObject> optionButtons = new List<GameObject>();
@@ -39,6 +40,7 @@ public class UIController : MonoBehaviour
             UIDocument buttonUI = button.GetComponent<UIDocument>();
             VisualElement buttonRoot = buttonUI.rootVisualElement;
             Button buttonElement = buttonRoot.Query<Button>("option-button");
+            buttonElement.styleSheets.Add(styleSheet);
             buttonElement.text = option;
             choicebox.Add(buttonElement);
         });
