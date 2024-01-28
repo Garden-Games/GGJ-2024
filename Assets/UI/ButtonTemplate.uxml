@@ -1,3 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button" />
+    <Style src="project://database/Assets/buttonStyle.uss?fileID=7433441132597879392&amp;guid=ac50882ffe3f04172839e88eadb55f9b&amp;type=3#buttonStyle" />
+    <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="option-button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-font-definition: url(&apos;project://database/Assets/UI/CuteFont-Regular%20SDF.asset?fileID=11400000&amp;guid=1faa8e08a3eac4e1b855e275bcc2352a&amp;type=2#CuteFont-Regular SDF&apos;); -unity-font-style: bold; font-size: 32px;" />
 </ui:UXML>
