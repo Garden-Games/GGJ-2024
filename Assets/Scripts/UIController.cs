@@ -53,6 +53,7 @@ public class UIController : MonoBehaviour
         List<string> options = new List<string> { "OYSTERS", "POTATOS", "ICE CREAM CONES" };
         if (Input.GetKey(KeyCode.Alpha1))
         {
+            // Debug.Log("Hello from button press");
             sendOptions(options);
         }
     }
