@@ -76,3 +76,4 @@ crashlytics-build.properties
 
 # Blender temporary files
 *.blend1
+*.blend1.meta
