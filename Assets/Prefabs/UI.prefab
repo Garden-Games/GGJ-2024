@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doc: {fileID: 5778645732035587248}
   buttonTemplate: {fileID: 5278309773337537168, guid: 662ca6e77dc504c17a10001f1c494ce0, type: 3}
+  styleSheet: {fileID: 7433441132597879392, guid: c35066f8e9a69498c97df39608e4d75a, type: 3}
 --- !u!1 &2214482251557777953
 GameObject:
   m_ObjectHideFlags: 0
