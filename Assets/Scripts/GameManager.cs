@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
                     // TODO: Use UI inputs instead of key presses
                     if (lightsOn)
                     {
+                        controller.updateDialogue("Eyeing the lit room, McCringle opts to _______ .");
 
                         if (this.option == "Walk Around")
                         {
@@ -89,7 +90,8 @@ public class GameManager : MonoBehaviour
 
                     else // lightsOn == false
                     {
-                        
+                        controller.updateDialogue("Waiting in darkness, Julius \"Spud\" McCringle decides to _______ .");
+
                         if (option == "Walk Around")
                         {
                             clearOptions();
@@ -124,6 +126,8 @@ public class GameManager : MonoBehaviour
                 
             case StoryState.WalkAround:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
 
                     if (elapsedSecondsInState >= stateDurationSeconds)
@@ -137,6 +141,8 @@ public class GameManager : MonoBehaviour
 
             case StoryState.TurnOnLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
 
                     if (elapsedSecondsInState >= stateDurationSeconds)
@@ -149,6 +155,8 @@ public class GameManager : MonoBehaviour
                 }
             case StoryState.TurnOffLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
 
                     if (elapsedSecondsInState >= stateDurationSeconds)
@@ -163,12 +171,15 @@ public class GameManager : MonoBehaviour
             // Triggered when the user chooses to go to sleep
             case StoryState.EndingNothing:
                 {
+                    controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
                     // TODO: Trigger ending and credits sequence
                     break;
                 }
 
             case StoryState.OpenDoor:
                 {
+                    controller.updateDialogue("McCringle finds a tremendous _______ as the pantry door swings open...");
+
                     float stateDurationSeconds = 5;
 
                     if (elapsedSecondsInState >= stateDurationSeconds)
@@ -311,6 +322,9 @@ public class GameManager : MonoBehaviour
                 break;
         }
         antagonist = name;
+
+        controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + name + ".");
+
         currentStoryState = StoryState.NavigateAntagonist;
         Debug.Log("Press 1 for approach, 2 for avoid");
     }
