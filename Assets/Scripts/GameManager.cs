@@ -204,7 +204,8 @@ public class GameManager : MonoBehaviour
             case StoryState.EndingNothing:
                 {
                     controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
-                    // TODO: Trigger ending and credits sequence
+                    curtainsAnimator.SetTrigger("playCloseCurtains");
+                    lightingAnimator.SetTrigger("playTurnOnFrontLights");
                     exploreAudio.Stop();
                     break;
                 }
