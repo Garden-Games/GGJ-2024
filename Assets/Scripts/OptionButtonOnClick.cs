@@ -26,9 +26,9 @@ public class OptionButtonOnClick : MonoBehaviour
             gameManager = GameObject.Find("GameManager");
         }
 
+        Debug.Log($"{thisButton.text} button has been pressed");
         if(!isClicked)
         {
-        Debug.Log($"{thisButton.text} button has been pressed");
         gameManager.SendMessage("handleOption",thisButton.text);
         isClicked = true;
         }
