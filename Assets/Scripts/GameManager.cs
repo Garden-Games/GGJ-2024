@@ -173,6 +173,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenDoor:
                 {
+                    
                     StartCloseCurtainState();
                     stateStartTime = Time.time;
                     Debug.Log("Transitioning to " + currentStoryState);
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.DefineAntagonist:
                 {
+                    controller.updateDialogue("Define antagonist");
                     // TODO: Use UI inputs instead of key presses
                     if (option != null)
                     {
@@ -196,6 +198,9 @@ public class GameManager : MonoBehaviour
 
             case StoryState.NavigateAntagonist:
                 {
+                    
+                    controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + option + ".");
+
                     // TODO: Use UI inputs instead of key presses
                     if (option == "Approach")
                     {
@@ -215,6 +220,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.EndingEaten:
                 {
+                    controller.updateDialogue("YOU DIED");
                     // TODO: Trigger ending and credits sequence
                     break;
                 }
@@ -312,6 +318,7 @@ public class GameManager : MonoBehaviour
 
     void DefineAntagonist()
     {
+        controller.updateDialogue("McCringle finds a tremendous _______ as the pantry door swings open...");
         controller.sendOptions(new List<string> { "Dog", "Hippo", "Kraken" });
         LoadAntagonist(option);
         antagonist = option;
@@ -325,6 +332,7 @@ public class GameManager : MonoBehaviour
 
     void LoadAntagonist(string name)
     {
+        
         switch(name)
         {
             case "Dog":
@@ -340,6 +348,8 @@ public class GameManager : MonoBehaviour
                 // TODO: Trigger loading kraken
                 break;
         }
+
+        
     }
 
     void StartNavigateAntagonist()
