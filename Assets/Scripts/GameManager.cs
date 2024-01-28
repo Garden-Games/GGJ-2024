@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         OpenDoor,
         NavigateAntagonist,
         EndingEaten,
+        EndingEscaped,
         Counter,
         CloseCurtains,
         OpenCurtains
@@ -233,9 +234,12 @@ public class GameManager : MonoBehaviour
                     }
                     else if (option == "Avoid")
                     {
-                        StartCloseCurtainState();
+                        controller.updateDialogue("YOU ESCAPED");
+                        curtainsAnimator.SetTrigger("playCloseCurtains");
+                        lightingAnimator.SetTrigger("playTurnOnFrontLights");
                         stateStartTime = Time.time;
                         antagonistAudio.Stop();
+                        currentStoryState = StoryState.EndingEscaped;
                         Debug.Log("Transitioning to " + currentStoryState);
                     }
 
