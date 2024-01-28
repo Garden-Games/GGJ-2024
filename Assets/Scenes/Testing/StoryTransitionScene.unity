@@ -193,6 +193,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755f114ac1af37746956f15814174925, type: 3}
+--- !u!1 &452565373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5969686563939402347, guid: b08afda65584ad545b075a8f8710a33d, type: 3}
+  m_PrefabInstance: {fileID: 2469514280372986318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &452565375
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452565373}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d252284ede3809145aaff7f4197be05b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &489710409 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7202831524130227552, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
@@ -347,6 +373,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3892382905668722077, guid: b08afda65584ad545b075a8f8710a33d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.69
+      objectReference: {fileID: 0}
     - target: {fileID: 5969686563939402347, guid: b08afda65584ad545b075a8f8710a33d, type: 3}
       propertyPath: m_Name
       value: Curtains
@@ -354,7 +384,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5969686563939402347, guid: b08afda65584ad545b075a8f8710a33d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 452565375}
   m_SourcePrefab: {fileID: 100100000, guid: b08afda65584ad545b075a8f8710a33d, type: 3}
 --- !u!1001 &7687276609198006504
 PrefabInstance:
@@ -480,7 +513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 122372997734340359, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
-      value: 0
+      value: 3.24
       objectReference: {fileID: 0}
     - target: {fileID: 830172574371637967, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
@@ -536,7 +569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908363014641908449, guid: b5121159da6f3374bb31ef65c4bf9efa, type: 3}
       propertyPath: m_Intensity
-      value: 0
+      value: 3.24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
