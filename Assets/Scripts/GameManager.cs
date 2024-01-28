@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviour
 
     public Animator lightingAnimator;
     public Animator potatoAnimator;
+    public UIController controller;
+
 
     private StoryState currentStoryState;
 
     private float stateStartTime;
     private bool lightsOn;
     private string antagonist;
+    private string option;
         
 
     // Start is called before the first frame update
@@ -50,26 +53,34 @@ public class GameManager : MonoBehaviour
         {
             case StoryState.Beginning:
                 {
-
+                    
                     // TODO: Use UI inputs instead of key presses
                     if (lightsOn)
                     {
-                        if (Input.GetKey(KeyCode.Alpha1))
+
+                        if (this.option == "Walk Around")
                         {
+                            clearOptions();
                             StartWalkAroundState();
                             stateStartTime = Time.time;
+                            
+
                             Debug.Log("Transitioning to " + currentStoryState);
                         }
-                        else if (Input.GetKey(KeyCode.Alpha2))
+                        else if (option == "Turn Off Lights")
                         {
+                            clearOptions();
                             StartTurnOffLightState();
                             stateStartTime = Time.time;
+                            
                             Debug.Log("Transitioning to " + currentStoryState);
                         }
-                        else if (Input.GetKey(KeyCode.Alpha3))
+                        else if (option == "Open Door")
                         {
+                            clearOptions();
                             StartOpenDoorState();
                             stateStartTime = Time.time;
+                            
                             Debug.Log("Transitioning to " + currentStoryState);
                         }
 
@@ -78,23 +89,33 @@ public class GameManager : MonoBehaviour
 
                     else // lightsOn == false
                     {
-                        if (Input.GetKey(KeyCode.Alpha1))
+                        
+                        if (option == "Walk Around")
                         {
+                            clearOptions();
                             StartWalkAroundState();
                             stateStartTime = Time.time;
                             Debug.Log("Transitioning to " + currentStoryState);
                         }
-                        else if (Input.GetKey(KeyCode.Alpha2))
+                        else if (option == "Turn On Lights")
                         {
+                            clearOptions();
                             StartTurnOnLightState();
                             stateStartTime = Time.time;
+                            
                             Debug.Log("Transitioning to " + currentStoryState);
                         }
-                        else if (Input.GetKey(KeyCode.Alpha3))
+                        else if (option == "Go to sleep")
                         {
+                            clearOptions();
                             currentStoryState = StoryState.EndingNothing;
                             stateStartTime = Time.time;
+                            
                             Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else
+                        {
+                            //Debug.Log("Got unexpected option " + option);
                         }
 
                         break;
@@ -225,12 +246,15 @@ public class GameManager : MonoBehaviour
 
     void StartBeginningState()
     {
+    
         if (lightsOn)
         {
+            controller.sendOptions(new List<string> { "Walk Around", "Turn Off Lights", "Open Door" });
             Debug.Log("Press 1 for walk around, 2 for lights off, 3 to open door");
         }
         else
         {
+            controller.sendOptions(new List<string> { "Walk Around", "Turn On Lights", "Go to sleep" });
             Debug.Log("Press 1 for walk around, 2 for lights on, 3 to go to sleep");
         }
         currentStoryState = StoryState.Beginning;
@@ -241,6 +265,7 @@ public class GameManager : MonoBehaviour
         lightingAnimator.SetTrigger("playTurnOnLights");
         currentStoryState = StoryState.TurnOnLight;
         lightsOn = true;
+        
     }
 
     void StartTurnOffLightState()
@@ -289,4 +314,18 @@ public class GameManager : MonoBehaviour
         currentStoryState = StoryState.NavigateAntagonist;
         Debug.Log("Press 1 for approach, 2 for avoid");
     }
+
+    void handleOption(string option)
+    {
+        Debug.Log("Hello from game manager " + option);
+        this.option = option;
+    } 
+
+    void clearOptions()
+    {
+        option = null;
+        controller.sendOptions(new List<string>());
+    }
+   
+
 }
