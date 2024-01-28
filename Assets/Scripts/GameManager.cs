@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (option == "Approach")
                     {
+                        potatoAnimator.SetTrigger("playPotatoApproachEnemy");
                         currentStoryState = StoryState.EndingEaten;
                         stateStartTime = Time.time;
                         Debug.Log("Transitioning to " + currentStoryState);
@@ -222,7 +223,14 @@ public class GameManager : MonoBehaviour
 
             case StoryState.EndingEaten:
                 {
-                    // TODO: Trigger ending and credits sequence
+                    float stateDurationSeconds = 5;
+                    if (elapsedSecondsInState >= stateDurationSeconds)
+                    {
+                        curtainsAnimator.SetTrigger("playCloseCurtains");
+                        // TODO: You Died
+
+                        stateStartTime = Time.time;
+                    }
                     break;
                 }
 
