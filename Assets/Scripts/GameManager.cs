@@ -10,7 +10,12 @@ public class GameManager : MonoBehaviour
         WalkAround,
         TurnOnLight,
         TurnOffLight,
-        GoToSleep,
+        EndingNothing,
+        OpenDoor,
+        DefineAntagonist,
+        NavigateAntagonist,
+        EndingEaten,
+        Counter,
         CloseCurtains,
         OpenCurtains
     }
@@ -18,10 +23,16 @@ public class GameManager : MonoBehaviour
     public Animator lightingAnimator;
     public Animator potatoAnimator;
     public Animator curtainsAnimator;
+    public UIController controller;
+
 
     private StoryState currentStoryState;
 
     private float stateStartTime;
+    private bool lightsOn;
+    private string antagonist;
+    private string option;
+    private bool doorOpened;
         
 
     // Start is called before the first frame update
@@ -29,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         StartBeginningState();
         stateStartTime = Time.time;
+        lightsOn = false;
     }
 
     // Update is called once per frame
@@ -45,46 +57,70 @@ public class GameManager : MonoBehaviour
         {
             case StoryState.Beginning:
                 {
-
                     // TODO: Use UI inputs instead of key presses
-                    if (Input.GetKey(KeyCode.Alpha1))
+                    if (lightsOn)
                     {
-                        StartWalkAroundState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
+                        if (this.option == "Walk Around")
+                        {
+                            clearOptions();
+                            StartWalkAroundState();
+                            stateStartTime = Time.time;
+                            
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (option == "Turn Off Lights")
+                        {
+                            clearOptions();
+                            StartTurnOffLightState();
+                            stateStartTime = Time.time;
+                            
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (option == "Open Door")
+                        {
+                            clearOptions();
+                            StartOpenDoorState();
+                            stateStartTime = Time.time;
+                            
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
 
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha2))
-                    {
-                        StartTurnOnLightState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha3))
-                    {
-                        StartTurnOffLightState();
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha4))
-                    {
-                        currentStoryState = StoryState.GoToSleep;
-                        stateStartTime = Time.time;
-                        Debug.Log("Transitioning to " + currentStoryState);
-                    }
-                    else if (Input.GetKey(KeyCode.Alpha5))
-                    {
-                        StartCloseCurtainState();
-                        stateStartTime = Time.time;
+                        break;
                     }
 
-                    break;
+                    else // lightsOn == false
+                    {
+                        if (option == "Walk Around")
+                        {
+                            clearOptions();
+                            StartWalkAroundState();
+                            stateStartTime = Time.time;
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (option == "Turn On Lights")
+                        {
+                            clearOptions();
+                            StartTurnOnLightState();
+                            stateStartTime = Time.time;
+                            
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+                        else if (option == "Go to sleep")
+                        {
+                            clearOptions();
+                            currentStoryState = StoryState.EndingNothing;
+                            stateStartTime = Time.time;
+                            
+                            Debug.Log("Transitioning to " + currentStoryState);
+                        }
+
+                        break;
+                    }
                 }
                 
             case StoryState.WalkAround:
                 {
                     float stateDurationSeconds = 5;
-
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         StartBeginningState();
@@ -97,7 +133,6 @@ public class GameManager : MonoBehaviour
             case StoryState.TurnOnLight:
                 {
                     float stateDurationSeconds = 5;
-
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         StartBeginningState();
@@ -109,7 +144,6 @@ public class GameManager : MonoBehaviour
             case StoryState.TurnOffLight:
                 {
                     float stateDurationSeconds = 5;
-
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
                         StartBeginningState();
@@ -119,30 +153,79 @@ public class GameManager : MonoBehaviour
                     break;
                 }
 
-            case StoryState.GoToSleep:
+            // Triggered when the user chooses to go to sleep
+            case StoryState.EndingNothing:
                 {
-                    float stateDurationSeconds = 5;
+                    // TODO: Trigger ending and credits sequence
+                    break;
+                }
 
-                    if (elapsedSecondsInState >= stateDurationSeconds)
+            case StoryState.OpenDoor:
+                {
+                    StartCloseCurtainState();
+                    stateStartTime = Time.time;
+                    Debug.Log("Transitioning to " + currentStoryState);
+
+                    break;
+                }
+
+            case StoryState.DefineAntagonist:
+                {
+                    // TODO: Use UI inputs instead of key presses
+                    if (option != null)
                     {
-                        StartBeginningState();
+                        LoadAntagonist(option);
+                        antagonist = option;
                         stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
                     }
 
+                    break;
+                }
+
+            case StoryState.NavigateAntagonist:
+                {
+                    // TODO: Use UI inputs instead of key presses
+                    if (option == "Approach")
+                    {
+                        currentStoryState = StoryState.EndingEaten;
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+                    else if (option == "Avoid")
+                    {
+                        StartCloseCurtainState();
+                        stateStartTime = Time.time;
+                        Debug.Log("Transitioning to " + currentStoryState);
+                    }
+
+                    break;
+                }
+
+            case StoryState.EndingEaten:
+                {
+                    // TODO: Trigger ending and credits sequence
+                    break;
+                }
+
+            case StoryState.Counter:
+                {
+                    // TODO: Load counter scene, continue story
                     break;
                 }
 
             case StoryState.CloseCurtains:
                 {
                     float stateDurationSeconds = 5;
-
                     if (elapsedSecondsInState < stateDurationSeconds)
                     {
                         break;
                     }
-                    if (Input.GetKey(KeyCode.Alpha5)) {
-                        StartOpenCurtainState();
-                        stateStartTime = Time.time;
+
+                    // Define antagonist after opening the door
+                    if (doorOpened)
+                    {
+                        DefineAntagonist();
                     }
 
                     break;
@@ -153,8 +236,15 @@ public class GameManager : MonoBehaviour
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
-                        StartBeginningState();
+                        break;
+                    }
+
+                    // Turn off door-open sequence after curtains re-open
+                    if (doorOpened)
+                    {
+                        StartNavigateAntagonist();
                         stateStartTime = Time.time;
+                        doorOpened = false;
                     }
 
                     break;
@@ -170,22 +260,30 @@ public class GameManager : MonoBehaviour
 
     void StartBeginningState()
     {
-        Debug.Log(
-            "Press 1 for walk around, 2 for lights on, 3 for lights off, 4 for sleep, "
-            + "5 to close curtains");
+    
+        if (lightsOn)
+        {
+            controller.sendOptions(new List<string> { "Walk Around", "Turn Off Lights", "Open Door" });
+        }
+        else
+        {
+            controller.sendOptions(new List<string> { "Walk Around", "Turn On Lights", "Go to sleep" });
+        }
         currentStoryState = StoryState.Beginning;
     }
 
     void StartTurnOnLightState()
     {
-        lightingAnimator.SetTrigger("playTurnOnLights");
+        lightingAnimator.SetTrigger("playTurnOnTopLeftLight");
         currentStoryState = StoryState.TurnOnLight;
+        lightsOn = true;
     }
 
     void StartTurnOffLightState()
     {
-        lightingAnimator.SetTrigger("playTurnOffLights");
+        lightingAnimator.SetTrigger("playTurnOffTopLeftLight");
         currentStoryState = StoryState.TurnOffLight;
+        lightsOn = false;
     }
 
     void StartWalkAroundState()
@@ -194,6 +292,62 @@ public class GameManager : MonoBehaviour
         currentStoryState = StoryState.WalkAround;
     }
 
+    void StartOpenDoorState()
+    {
+        // TODO: Trigger audio of door opening
+        currentStoryState = StoryState.OpenDoor;
+        doorOpened = true;
+    }
+
+    void DefineAntagonist()
+    {
+        controller.sendOptions(new List<string> { "Dog", "Hippo", "Kraken" });
+        LoadAntagonist(option);
+        antagonist = option;
+        stateStartTime = Time.time;
+        if (antagonist != null)
+        {
+            StartOpenCurtainState();
+            currentStoryState = StoryState.OpenCurtains;
+        }
+    }
+
+    void LoadAntagonist(string name)
+    {
+        switch(name)
+        {
+            case "Dog":
+                Debug.Log("Loading dog");
+                // TODO: Trigger loading dog
+                break;
+            case "Hippo":
+                Debug.Log("Loading hippo");
+                // TODO: Trigger loading hippo
+                break;
+            case "Kraken":
+                Debug.Log("Loading kraken");
+                // TODO: Trigger loading kraken
+                break;
+        }
+    }
+
+    void StartNavigateAntagonist()
+    {
+        controller.sendOptions(new List<string> { "Approach", "Avoid" });
+        currentStoryState = StoryState.NavigateAntagonist;
+    }
+
+    void handleOption(string option)
+    {
+        this.option = option;
+    } 
+
+    void clearOptions()
+    {
+        option = null;
+        controller.sendOptions(new List<string>());
+    }
+   
     void StartCloseCurtainState()
     {
         Debug.Log("Closing curtains. Press 5 to open curtains");
