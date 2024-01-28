@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
                     // TODO: Use UI inputs instead of key presses
                     if (lightsOn)
                     {
+                        controller.updateDialogue("Eyeing the lit room, McCringle opts to _______ .");
+
                         if (this.option == "Walk Around")
                         {
                             clearOptions();
@@ -90,6 +92,8 @@ public class GameManager : MonoBehaviour
 
                     else // lightsOn == false
                     {
+                        controller.updateDialogue("Waiting in darkness, Julius \"Spud\" McCringle decides to _______ .");
+
                         if (option == "Walk Around")
                         {
                             clearOptions();
@@ -120,6 +124,8 @@ public class GameManager : MonoBehaviour
                 
             case StoryState.WalkAround:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -132,6 +138,8 @@ public class GameManager : MonoBehaviour
 
             case StoryState.TurnOnLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -143,6 +151,8 @@ public class GameManager : MonoBehaviour
                 }
             case StoryState.TurnOffLight:
                 {
+                    controller.updateDialogue("");
+
                     float stateDurationSeconds = 5;
                     if (elapsedSecondsInState >= stateDurationSeconds)
                     {
@@ -156,12 +166,14 @@ public class GameManager : MonoBehaviour
             // Triggered when the user chooses to go to sleep
             case StoryState.EndingNothing:
                 {
+                    controller.updateDialogue("McCringle succumbs to a deep and dreamless slumber...");
                     // TODO: Trigger ending and credits sequence
                     break;
                 }
 
             case StoryState.OpenDoor:
                 {
+                    controller.updateDialogue("");
                     StartCloseCurtainState();
                     stateStartTime = Time.time;
                     Debug.Log("Transitioning to " + currentStoryState);
@@ -185,6 +197,9 @@ public class GameManager : MonoBehaviour
 
             case StoryState.NavigateAntagonist:
                 {
+                    
+                    controller.updateDialogue("Surprised by the ferocious beast, Spud quickly _______ the " + option + ".");
+
                     // TODO: Use UI inputs instead of key presses
                     if (option == "Approach")
                     {
@@ -204,6 +219,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.EndingEaten:
                 {
+                    controller.updateDialogue("YOU DIED");
                     // TODO: Trigger ending and credits sequence
                     break;
                 }
@@ -301,6 +317,7 @@ public class GameManager : MonoBehaviour
 
     void DefineAntagonist()
     {
+        controller.updateDialogue("McCringle finds a tremendous _______ as the pantry door swings open...");
         controller.sendOptions(new List<string> { "Dog", "Hippo", "Kraken" });
         LoadAntagonist(option);
         antagonist = option;
@@ -314,6 +331,7 @@ public class GameManager : MonoBehaviour
 
     void LoadAntagonist(string name)
     {
+        
         switch(name)
         {
             case "Dog":
@@ -329,6 +347,8 @@ public class GameManager : MonoBehaviour
                 // TODO: Trigger loading kraken
                 break;
         }
+
+        
     }
 
     void StartNavigateAntagonist()
@@ -350,6 +370,7 @@ public class GameManager : MonoBehaviour
    
     void StartCloseCurtainState()
     {
+        controller.updateDialogue("");
         Debug.Log("Closing curtains. Press 5 to open curtains");
         curtainsAnimator.SetTrigger("playCloseCurtains");
         lightingAnimator.SetTrigger("playTurnOnFrontLights");
@@ -358,6 +379,7 @@ public class GameManager : MonoBehaviour
 
     void StartOpenCurtainState()
     {
+        controller.updateDialogue("");
         curtainsAnimator.SetTrigger("playOpenCurtains");
         lightingAnimator.SetTrigger("playTurnOffFrontLights");
         currentStoryState = StoryState.OpenCurtains;
