@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
             case StoryState.OpenDoor:
                 {
-                    
+                    controller.updateDialogue("");
                     StartCloseCurtainState();
                     stateStartTime = Time.time;
                     Debug.Log("Transitioning to " + currentStoryState);
@@ -183,7 +183,6 @@ public class GameManager : MonoBehaviour
 
             case StoryState.DefineAntagonist:
                 {
-                    controller.updateDialogue("Define antagonist");
                     // TODO: Use UI inputs instead of key presses
                     if (option != null)
                     {
@@ -371,6 +370,7 @@ public class GameManager : MonoBehaviour
    
     void StartCloseCurtainState()
     {
+        controller.updateDialogue("");
         Debug.Log("Closing curtains. Press 5 to open curtains");
         curtainsAnimator.SetTrigger("playCloseCurtains");
         lightingAnimator.SetTrigger("playTurnOnFrontLights");
@@ -379,6 +379,7 @@ public class GameManager : MonoBehaviour
 
     void StartOpenCurtainState()
     {
+        controller.updateDialogue("");
         curtainsAnimator.SetTrigger("playOpenCurtains");
         lightingAnimator.SetTrigger("playTurnOffFrontLights");
         currentStoryState = StoryState.OpenCurtains;
